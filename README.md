@@ -1,6 +1,6 @@
-# homepage
- 
-Simple and beautiful personal browser startpage
+# start
+
+Simple and beautiful personal browser homepage
 
 ## About
 
