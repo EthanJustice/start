@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2,
+    "name": "Start",
+    "description": "Beautiful and clean start page",
+    "homepage_url": "https://github.com/EthanJustice/start/tree/master/v2/extension#readme",
+    "version": "0.2",
+    "chrome_url_overrides": {
+        "newtab": "page/index.html"
+    },
+    "permissions": [
+        "topSites"
+    ]
+}
