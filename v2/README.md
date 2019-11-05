@@ -4,10 +4,10 @@
 
 ### Downloading
 
-+ [Releases](https://github.com/EthanJustice/homepage/releases)
-+ [GitHub](https://github.com/EthanJustice/homepage/)
++ [Releases](https://github.com/EthanJustice/start/releases)
++ [GitHub](https://github.com/EthanJustice/start/)
 
-Cloning: `git clone https://github.com/EthanJustice/homepage`
+Cloning: `git clone https://github.com/EthanJustice/start`
 
 ### Set-Up
 

@@ -102,7 +102,17 @@ function updateDateAndTime() {
     if (d.getHours() < 10) { hours = `0${d.getHours().toString()}`}
     else { hours = d.getHours() }
     document.getElementById('time').innerHTML = `${hours}:${min}`
-    dateElem.innerHTML = `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`
+
+    let day = new Array(7);
+    day[0] = "SUN";
+    day[1] = "MON";
+    day[2] = "TUES";
+    day[3] = "WED";
+    day[4] = "THU";
+    day[5] = "FRI";
+    day[6] = "SAT";
+    
+    dateElem.innerHTML = `${d.getMonth()}.${d.getDate()}.${d.getFullYear()} ${day[d.getDay()]}`
 
     if (d.getHours() >= 12 && d.getHours() < 18) {
         searchBar.placeholder = 'Good Afternoon';
