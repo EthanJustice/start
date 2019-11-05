@@ -10,17 +10,20 @@ const quickLauncherList = {
         {
             "displayText": "Reddit",
             "destination": "https://reddit.com/",
-            "color": "#ff4500"
+            "color": "#ff4500",
+            "shortcut": "49"
         },
         {
             "displayText": "Product Hunt",
             "destination": "https://www.producthunt.com/",
-            "color": "#da552f"
+            "color": "#da552f",
+            "shortcut": "50"
         },
         {
             "displayText": "GitHub",
             "destination": "https://github.com/",
-            "color": "#6e5494"
+            "color": "#6e5494",
+            "shortcut": "51"
         }
     ]
 }
@@ -51,16 +54,6 @@ const linksList = {
             "displayText": "GitLab",
             "destination": "#",
             "color": "dodgerblue"
-        },
-        {
-            "displayText": "Another Site",
-            "destination": "#",
-            "color": "gold"
-        },
-        {
-            "displayText": "Laurem",
-            "destination": "#",
-            "color": "crimson"
         }
     ]
 }
@@ -161,6 +154,26 @@ function news() {
     });
     }
 }
+
+function shortcuts(key) {
+    let quickLaunchItems = quickLauncherList.items;
+    for (let i = 0; quickLaunchItems.length > i; i++) {
+        if (key.keyCode == quickLaunchItems[i].shortcut) {
+            window.open(quickLaunchItems[i].destination);
+        }
+    }
+
+    let linksItems = linksList.items;
+    for (let i = 0; linksItems.length > i; i++) {
+        if (key.keyCode == linksItems[i].shortcut) {
+            window.open(linksItems[i].destination);
+        }
+    }
+
+    if (key.keyCode == 32) { searchBar.focus() }
+}
+
+window.addEventListener('keypress', shortcuts, false);
 
 searchBar.addEventListener('keypress', function search(key) {
     if (key.keyCode == 13 && searchBar.value != '') {

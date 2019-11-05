@@ -10,7 +10,8 @@ const quickLauncherList = {
         {
             "displayText": "",
             "destination": "",
-            "color": ""
+            "color": "",
+            "shortcut": ""
         }
     ]
 }
@@ -20,7 +21,8 @@ const linksList = {
         {
             "displayText": "",
             "destination": "",
-            "color": ""
+            "color": "",
+            "shortcut": ""
         }
     ]
 }
@@ -121,6 +123,26 @@ function news() {
     });
     }
 }
+
+function shortcuts(key) {
+    let quickLaunchItems = quickLauncherList.items;
+    for (let i = 0; quickLaunchItems.length > i; i++) {
+        if (key.keyCode == quickLaunchItems[i].shortcut) {
+            window.open(quickLaunchItems[i].destination);
+        }
+    }
+
+    let linksItems = linksList.items;
+    for (let i = 0; linksItems.length > i; i++) {
+        if (key.keyCode == linksItems[i].shortcut) {
+            window.open(linksItems[i].destination);
+        }
+    }
+
+    if (key.keyCode == 32) { searchBar.focus() }
+}
+
+window.addEventListener('keypress', shortcuts, false);
 
 searchBar.addEventListener('keypress', function search(key) {
     if (key.keyCode == 13 && searchBar.value != '') {

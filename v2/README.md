@@ -12,5 +12,14 @@ Cloning: `git clone https://github.com/EthanJustice/start`
 ### Set-Up
 
 1. Navigate to the `script.js` file or equivalent.
-2. Edit the `quickLauncherList` or `linksItems` JSON variables (each object has three values: `displayText`, the name displayed on the link, `destination`, the site being linked to, and `color`, the color at the top border).
+2. Edit the `quickLauncherList` or `linksItems` JSON variables.
 3. Save the file
+
+### Object Values
+
+| Name | Use |
+| ---- | ---- |
+| displayText | Text displayed on screen |
+| destination | URL of link |
+| color | color at the top border |
+| shortcut | specifies a shortcut to open it (accepts keyCode numbers only) |
