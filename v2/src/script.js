@@ -127,14 +127,14 @@ function news() {
 function shortcuts(key) {
     let quickLaunchItems = quickLauncherList.items;
     for (let i = 0; quickLaunchItems.length > i; i++) {
-        if (key.keyCode == quickLaunchItems[i].shortcut) {
+        if (key.keyCode == quickLaunchItems[i].shortcut && document.activeElement == document.body ) {
             window.open(quickLaunchItems[i].destination);
         }
     }
 
     let linksItems = linksList.items;
     for (let i = 0; linksItems.length > i; i++) {
-        if (key.keyCode == linksItems[i].shortcut) {
+        if (key.keyCode == linksItems[i].shortcut && document.activeElement == document.body ) {
             window.open(linksItems[i].destination);
         }
     }
