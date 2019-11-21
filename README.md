@@ -7,6 +7,8 @@ Simple and beautiful personal browser homepage
 + [Site](https://ethanjustice.github.io/start)
 + [Demo](https://ethanjustice.github.io/start/demo)
 
+![Example](example.PNG)
+
 ## Downloading
 
 + [GitHub](https://github.com/EthanJustice/start)

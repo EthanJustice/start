@@ -65,14 +65,7 @@ function updateDateAndTime() {
     else { hours = d.getHours() }
     document.getElementById('time').innerHTML = `${hours}:${min}`
 
-    let day = new Array(7);
-    day[0] = "SUN";
-    day[1] = "MON";
-    day[2] = "TUES";
-    day[3] = "WED";
-    day[4] = "THU";
-    day[5] = "FRI";
-    day[6] = "SAT";
+    let day = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"]
     
     dateElem.innerHTML = `${d.getMonth()}.${d.getDate()}.${d.getFullYear()} ${day[d.getDay()]}`
 
