@@ -41,7 +41,7 @@ function createLinks() {
     let quickLaunchItems = quickLauncherList.items;
     for (let i = 0; quickLaunchItems.length > i; i++) {
         let newLink = document.createElement('a');
-        newLink.innerHTML = quickLaunchItems[i].displayText;
+        newLink.innerText = quickLaunchItems[i].displayText;
         newLink.href = quickLaunchItems[i].destination;
         newLink.style.borderTop = `3px solid ${quickLaunchItems[i].color}`;
         document.getElementById('quick-launcher').appendChild(newLink);
@@ -50,7 +50,7 @@ function createLinks() {
     let linksItems = linksList.items;
     for (let i = 0; linksItems.length > i; i++) {
         let newLink = document.createElement('a');
-        newLink.innerHTML = linksItems[i].displayText;
+        newLink.innerText = linksItems[i].displayText;
         newLink.href = linksItems[i].destination;
         newLink.style.borderTop = `2px solid ${linksItems[i].color}`;
         document.getElementById('links-lists').appendChild(newLink)
@@ -63,11 +63,11 @@ function updateDateAndTime() {
     else { min = d.getMinutes() }
     if (d.getHours() < 10) { hours = `0${d.getHours().toString()}`}
     else { hours = d.getHours() }
-    document.getElementById('time').innerHTML = `${hours}:${min}`
+    document.getElementById('time').innerText = `${hours}:${min}`
 
     let day = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"]
     
-    dateElem.innerHTML = `${d.getMonth()}.${d.getDate()}.${d.getFullYear()} ${day[d.getDay()]}`
+    dateElem.innerText = `${d.getMonth() + 1}.${d.getDate()}.${d.getFullYear()} ${day[d.getDay()]}`
 
     if (d.getHours() >= 12 && d.getHours() < 18) {
         searchBar.placeholder = 'Good Afternoon';
@@ -83,20 +83,20 @@ function weather() {
         let weather = data.consolidated_weather;
         return weather.map(function(weather) {
             let temp = Math.round(weather.the_temp * (9 / 5) + 32);
-            weatherElem.innerHTML =  `${temp}° ${weather.weather_state_name}`;
+            weatherElem.innerText =  `${temp}° ${weather.weather_state_name}`;
         });
     }).catch(function(err) {
-        console.log(`Failed: ${err}`)
+        console.error(`Failed: ${err}`)
     })
 }
 
 function quote() {
     fetch('https://quote-garden.herokuapp.com/quotes/random').then(resp => resp.json()).then(function(data) {
-        quoteElem.innerHTML = `"${data.quoteText}"`;
+        quoteElem.innerText = `"${data.quoteText}"`;
         if (data.quoteAuthor == '') { return }
-        else { document.getElementById('quote-author').innerHTML = `-${data.quoteAuthor}`; }
+        else { document.getElementById('quote-author').innerText = `-${data.quoteAuthor}`; }
     }).catch(function(err) {
-        console.log(`Failed: ${err}`)
+        console.error(`Failed: ${err}`)
     });
 }
 
@@ -108,11 +108,11 @@ function news() {
         let newStoryContainer = document.createElement('h4');
         let newStory = document.createElement('a');
         newStory.href = data.url;
-        newStory.innerHTML = data.title;
+        newStory.innerText = data.title;
         newStoryContainer.appendChild(newStory);
         newsElem.appendChild(newStoryContainer)
     }).catch(function(err) {
-        console.log(`Failed: ${err}`)
+        console.error(`Failed: ${err}`)
     });
     }
 }

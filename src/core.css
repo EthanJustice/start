@@ -1,6 +1,6 @@
 HTML {
   scroll-behavior: smooth;
-  border-top: 5px solid var(--highlight);
+  border-top: 2px solid var(--highlight);
 }
 Body {
   text-align: center;
@@ -8,6 +8,9 @@ Body {
   padding: 10px;
   line-height: 1.4;
   background: var(--primary);
+  background-image: radial-gradient(var(--tertiary) 1px, transparent 0);
+  background-size: 50px 50px;
+  background-position: -10px -10px;
   color: var(--secondary);
   text-rendering: optimizeLegibility;
   animation: 0.5s fadeIn linear;
