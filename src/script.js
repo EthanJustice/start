@@ -5,6 +5,10 @@ const searchBar = document.getElementById('search-bar');
 const quoteElem = document.getElementById('quote-text');
 const newsElem = document.getElementById('news');
 
+const config = {
+    "weather_location_code": "" // See https://www.metaweather.com/map/
+}
+
 const quickLauncherList = {
     "items": [
         {
@@ -27,13 +31,15 @@ const linksList = {
     ]
 }
 
-window.addEventListener('load', function run() {
+window.addEventListener('load', () => {
     createLinks();
     updateDateAndTime();
     const update = setInterval(updateDateAndTime, 1000);
+
     weather();
     quote();
     news();
+
     searchBar.value = '';
 });
 
@@ -46,7 +52,7 @@ function createLinks() {
         newLink.style.borderTop = `3px solid ${quickLaunchItems[i].color}`;
         document.getElementById('quick-launcher').appendChild(newLink);
     }
-    
+
     let linksItems = linksList.items;
     for (let i = 0; linksItems.length > i; i++) {
         let newLink = document.createElement('a');
@@ -61,12 +67,12 @@ function updateDateAndTime() {
     let d = new Date();
     if (d.getMinutes() < 10) { min = `0${d.getMinutes().toString()}` }
     else { min = d.getMinutes() }
-    if (d.getHours() < 10) { hours = `0${d.getHours().toString()}`}
+    if (d.getHours() < 10) { hours = `0${d.getHours().toString()}` }
     else { hours = d.getHours() }
     document.getElementById('time').innerText = `${hours}:${min}`
 
     let day = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"]
-    
+
     dateElem.innerText = `${d.getMonth() + 1}.${d.getDate()}.${d.getFullYear()} ${day[d.getDay()]}`
 
     if (d.getHours() >= 12 && d.getHours() < 18) {
@@ -79,55 +85,61 @@ function updateDateAndTime() {
 }
 
 function weather() {
-    fetch('https://www.metaweather.com/api/location/LOCATIONCODE').then(resp => resp.json()).then(function(data) {
+    fetch(`https://www.metaweather.com/api/location/${config.weather_location_code}/`).then(resp => resp.json()).then(function (data) {
         let weather = data.consolidated_weather;
-        return weather.map(function(weather) {
-            let temp = Math.round(weather.the_temp * (9 / 5) + 32);
-            weatherElem.innerText =  `${temp}° ${weather.weather_state_name}`;
+        let states = {};
+        let temp;
+        weather.forEach(item => {
+            temp = Math.round(weather.the_temp * (9 / 5) + 32);
+            states[item.weather_state_name] ? states[item.weather_state_name] += 1 : states[item.weather_state_name] = 1;
         });
-    }).catch(function(err) {
-        console.error(`Failed: ${err}`)
+        weatherElem.innerText = `${temp}° ${Object.keys(states).sort((a, b) => { return String(states[a]).localeCompare(String(states[b]))[1] })}`;
+    }).catch(function (err) {
+        buildError('Failed to load weather.', err);
     })
 }
 
 function quote() {
-    fetch('https://quote-garden.herokuapp.com/quotes/random').then(resp => resp.json()).then(function(data) {
+    fetch('https://quote-garden.herokuapp.com/quotes/random').then(resp => resp.json()).then(function (data) {
         quoteElem.innerText = `"${data.quoteText}"`;
         if (data.quoteAuthor == '') { return }
         else { document.getElementById('quote-author').innerText = `-${data.quoteAuthor}`; }
-    }).catch(function(err) {
-        console.error(`Failed: ${err}`)
+    }).catch(function (err) {
+        buildError('Failed to load quote.', err);
     });
 }
 
 function news() {
     for (let i = 0; 5 > i; i++) {
-    fetch('https://hacker-news.firebaseio.com/v0/topstories.json').then(resp => resp.json()).then(function(data) {
-        return fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`).then(function(res) { return res.json() });
-    }).then(function(data) {
-        let newStoryContainer = document.createElement('h4');
-        let newStory = document.createElement('a');
-        newStory.href = data.url;
-        newStory.innerText = data.title;
-        newStoryContainer.appendChild(newStory);
-        newsElem.appendChild(newStoryContainer)
-    }).catch(function(err) {
-        console.error(`Failed: ${err}`)
-    });
-    }
+        fetch('https://hacker-news.firebaseio.com/v0/topstories.json').then(resp => resp.json()).then(function (data) {
+            return fetch(`https://hacker-news.firebaseio.com/v0/item/${data[i]}.json?print=pretty`).then(function (res) { return res.json() });
+        }).then(function (data) {
+            let newStoryContainer = document.createElement('h4');
+            let newStory = document.createElement('a');
+            newStory.href = data.url || `https://news.ycombinator.com/item?id=${data.id}`;
+            newStory.innerHTML = data.title;
+
+            newStoryContainer.appendChild(newStory);
+            newsElem.appendChild(newStoryContainer);
+        }).catch(function (err) {
+            newsElem.style.display = 'none';
+            buildError('Failed to load data from HackerNews.', err);
+        });
+    };
 }
+
 
 function shortcuts(key) {
     let quickLaunchItems = quickLauncherList.items;
     for (let i = 0; quickLaunchItems.length > i; i++) {
-        if (key.keyCode == quickLaunchItems[i].shortcut && document.activeElement == document.body ) {
+        if (key.keyCode == quickLaunchItems[i].shortcut && document.activeElement == document.body) {
             window.open(quickLaunchItems[i].destination);
         }
     }
 
     let linksItems = linksList.items;
     for (let i = 0; linksItems.length > i; i++) {
-        if (key.keyCode == linksItems[i].shortcut && document.activeElement == document.body ) {
+        if (key.keyCode == linksItems[i].shortcut && document.activeElement == document.body) {
             window.open(linksItems[i].destination);
         }
     }
@@ -143,3 +155,9 @@ searchBar.addEventListener('keypress', function search(key) {
         window.open(`https://duckduckgo.com/?q=${query}`)
     } else { return }
 });
+
+function buildError(msg, err) {
+    console.error(err);
+    document.querySelector('.error > h3').innerText = msg;
+    document.querySelector('.error').classList.remove('hidden');
+}
