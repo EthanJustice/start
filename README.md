@@ -2,29 +2,30 @@
 
 Simple and beautiful personal browser homepage
 
-## About
-
-+ [Site](https://ethanjustice.github.io/start)
-+ [Demo](https://ethanjustice.github.io/start/demo)
+## Screenshots
 
 ![Example](example.PNG)
 
-## Downloading
+## Installation
+
+### Downloading
 
 + [GitHub](https://github.com/EthanJustice/start)
 + [Releases](https://github.com/EthanJustice/start/releases)
 
 Cloning: `git clone https://github.com/EthanJustice/start`
 
-## Usage
+### Usage
 
-### Set-Up
+#### Set-Up
 
-1. Navigate to the `script.js` file or equivalent.
-2. Edit the `quickLauncherList` or `linksItems` JSON variables.
+1. Navigate to the `index.js` file or equivalent.
+2. Edit the `launcher` or `links` object variables.
 3. Save the file
 
-### Object Values
+#### Object Values
+
+This is the format the links use.
 
 | Name | Use |
 | ---- | ---- |
@@ -32,3 +33,16 @@ Cloning: `git clone https://github.com/EthanJustice/start`
 | destination | URL of link |
 | color | color at the top border |
 | shortcut | specifies a shortcut to open it (accepts keyCode numbers only) |
+
+```javascript
+const launcher = {
+    items: [
+        {
+            displayText: "Github", // displayed in the list
+            destination: "https://github.com", // link to open when clicked/shortcut activated
+            color: "#6e5494", // purple color
+            shortCut: "65" // this is the "a" key
+        }
+    ]
+}
+```
